@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "axios": "^1.12.2",
+    "fastapi": "^0.0.8",
+    "uvicorn": "^0.0.1-security"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.9.36"
+  }
+}
