@@ -14,7 +14,7 @@ const ChatArea = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-  content: "Hello! I'm Channa AI, your intelligent conversation companion. How can I help you today?",
+  content: "Hello! I'm Amigo AI, your intelligent conversation companion. How can I help you today?",
       isUser: false,
       timestamp: new Date()
     }
