@@ -9,6 +9,7 @@
     "uvicorn": "^0.0.1-security"
   },
   "devDependencies": {
-    "@types/axios": "^0.9.36"
+    "@types/axios": "^0.9.36",
+    "vite": "^5.4.20"
   }
 }
