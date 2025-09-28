@@ -44,7 +44,7 @@ const AuthPage = ({ onLogin, onSignup, isLoading }: AuthPageProps) => {
             <Sparkles className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent mb-2">
-            Amigo AI
+            Channa AI
           </h1>
           <p className="text-purple-600/70 text-sm">
             Your intelligent conversation companion
