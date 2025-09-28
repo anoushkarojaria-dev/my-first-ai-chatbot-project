@@ -9,6 +9,7 @@ from pydantic import BaseModel
 from fastapi.responses import StreamingResponse
 from dotenv import load_dotenv
 import openai
+from supabase import create_client
 
 
 env_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../.env'))
@@ -18,6 +19,9 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 OPENAI_BASE_URL = os.getenv('OPENAI_BASE_URL', 'https://integrate.api.nvidia.com/v1')
 OPENAI_MODEL = os.getenv('OPENAI_MODEL', 'qwen/qwen3-next-80b-a3b-instruct')
 OPENAI_PROMPT = os.getenv('OPENAI_PROMPT', 'You are a helpful therapy chatbot.')
+SUPABASE_URL = os.getenv('SUPABASE_URL')
+SUPABASE_KEY = os.getenv('SUPABASE_KEY')
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # Setup OpenAI client for NVIDIA API
 openai_client = openai.OpenAI(
@@ -29,6 +33,14 @@ openai_client = openai.OpenAI(
 class ChatRequest(BaseModel):
     message: str
 
+class RegisterUser(BaseModel):
+    email: str
+    password: str
+
+class LoginUser(BaseModel):
+    email: str
+    password: str
+
 
 
 app = FastAPI()
@@ -39,6 +51,30 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
+@app.post("/register")
+def register(user: RegisterUser):
+    try:
+        response = supabase.auth.sign_up({
+            "email": user.email,
+            "password": user.password
+        })
+        return {"message": "User registered successfully", "data": response}
+    except Exception as e:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.post("/login")
+def login(user: LoginUser):
+    try:
+        response = supabase.auth.sign_in_with_password({
+            "email": user.email,
+            "password": user.password
+        })
+        return {"message": "Login successful", "data": response}
+    except Exception as e:
+        from fastapi import HTTPException
+        raise HTTPException(status_code=400, detail=str(e))
 
 @app.get("/")
 def root():

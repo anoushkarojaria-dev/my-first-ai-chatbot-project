@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send, Mic, Bot, User } from 'lucide-react';
 import axios from 'axios';
+import { supabase } from '../supabaseClient';
 
 interface Message {
   id: string;
@@ -13,7 +14,7 @@ const ChatArea = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: "Hello! I'm Channa AI, your intelligent conversation companion. How can I help you today?",
+  content: "Hello! I'm Amigo AI, your intelligent conversation companion. How can I help you today?",
       isUser: false,
       timestamp: new Date()
     }
@@ -30,6 +31,9 @@ const ChatArea = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  // Example: Save message to Supabase (future usage)
+  // await supabase.from('messages').insert([{ content: inputValue, isUser: true }]);
 
   const handleSend = async () => {
     if (!inputValue.trim()) return;
